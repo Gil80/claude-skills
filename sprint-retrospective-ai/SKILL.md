@@ -64,15 +64,35 @@ python ~/.claude/skills/sprint-retrospective-ai/scripts/retro_analyzer.py \
   --board-id 42 --export-data sprint_data.json
 ```
 
-## Output Structure
+## Sample Output
 
-The AI produces a Markdown report with these sections:
-- **Sprint Summary** — completion rate + goal status
-- **What Went Well** — 3–5 positive observations
-- **What Didn't Go Well** — blockers, issues, concerns
-- **Key Patterns & Observations** — workload, bugs, scope changes
-- **Action Items** — 3–5 concrete improvements for next sprint
-- **Risk Flags** — items that could affect next sprint
+```markdown
+# Sprint Retrospective: Sprint 42
+
+## Sprint Summary
+The team completed 18 of 23 planned issues (78% completion rate). The sprint goal —
+shipping the new billing module — was partially achieved. Core functionality was
+delivered but CSV export (PROJ-356) was moved to Sprint 43.
+
+## What Went Well
+- Bug resolution rate was strong: 7 of 8 bugs closed within the sprint
+- PROJ-341 (payment gateway integration) was delivered ahead of schedule
+- No unplanned work was added mid-sprint
+
+## What Didn't Go Well
+- PROJ-356 was scoped too broadly and carried over
+- Two team members carried 60% of the ticket load (unbalanced distribution)
+- Three P2 bugs were found in QA that should have been caught earlier
+
+## Action Items
+- Break PROJ-356 into smaller sub-tasks before Sprint 43 planning
+- Cap any single developer at 30% of sprint capacity during assignment
+- Add a pre-QA checklist for features with P2 risk
+
+## Risk Flags
+- PROJ-356 carry-over adds scope pressure to Sprint 43
+- Unbalanced workload is a burnout risk — address in 1:1s
+```
 
 ## Common Mistakes
 
