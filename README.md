@@ -19,6 +19,11 @@ A formalized skill for generating hyper-realistic, highly-controlled images usin
 
 **Trigger:** Ask Claude to "generate a realistic image", "create a hyper-realistic portrait", or "generate an image using Nano Banana".
 
+### [create-coloring-book](./create-coloring-book)
+Generates a print-ready A4 coloring book (DOCX) from a list of image URLs. Overwrites `links.txt` with provided URLs and runs the generation script.
+
+**Trigger:** Ask Claude to "create a coloring book", "generate the coloring book docx", or paste image URLs for a coloring book.
+
 ## Installation
 
 Clone this repo and copy the skills you want into your Claude skills directory:
@@ -28,6 +33,7 @@ git clone https://github.com/Gil80/claude-skills.git
 cp -r claude-skills/sprint-retrospective-ai ~/.claude/skills/
 cp -r claude-skills/release-notes-ai ~/.claude/skills/
 cp -r claude-skills/nano-banana-images ~/.claude/skills/
+cp -r claude-skills/create-coloring-book ~/.claude/skills/
 ```
 
 ## Requirements
