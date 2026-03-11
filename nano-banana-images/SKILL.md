@@ -14,7 +14,7 @@ Provide a standardized, highly controlled method for generating images using AI 
 nano-banana-images/
 ├── SKILL.md                                  # This file
 ├── gemini.md                                 # Gemini project organizer notes
-├── master_prompt_reference                   # Full JSON schema reference guide
+├── master_prompt_reference.md                 # Full JSON schema reference guide — READ THIS before building prompts
 ├── scripts/
 │   ├── generate_kie.py                       # Kie.ai nano-banana-2 API
 │   ├── generate_gemini.py                    # Google Gemini API (direct)
@@ -196,7 +196,8 @@ When executing API calls to standard generation endpoints (which often only acce
 7.  **Avoid Over-Degradation (The Noise Trap):** While simulating camera flaws (like `compression artifacts`) can help realism, pushing extreme `ISO 3200` or `heavy film grain` in complex, contrast-heavy environments (like neon night streets) actually triggers the model's "digital art/illustration" biases. Keep ISO settings below 800 and rely on *physical subject imperfections* (like peach fuzz or asymmetrical pores) rather than heavy camera noise to sell the realism.
 
 ## Master Reference Guide
-For the absolute full schema breakdown, parameter options, or the complex JSON structuring for multi-panel grids, refer to: `master_prompt_reference` in this skill directory.
+
+**IMPORTANT:** Before constructing any JSON prompt, you **MUST** read `master_prompt_reference.md` in this skill's root directory. It contains the full schema breakdown, parameter options, complex JSON structuring for multi-panel grids, and best practices for Nano Banana 2 prompting. Use it as your authoritative reference for what a well-constructed `.json` prompt looks like — including the Dense Narrative format, the Deep Grid format, camera mathematics, and the mandatory negative prompt stack. Always consult this file to ensure your generated prompts follow the correct structure and level of detail.
 
 ## Execution: Backend Selection
 
