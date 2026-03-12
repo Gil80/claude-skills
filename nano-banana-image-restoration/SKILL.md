@@ -11,6 +11,28 @@ Provide a structured, repeatable workflow for restoring scanned vintage film pho
 
 This skill covers two prompt formats and multiple execution backends.
 
+## Skill Folder Structure
+
+```
+nano-banana-image-restoration/
+├── SKILL.md                                  # This file — workflow, constraints, usage
+├── scripts/
+│   ├── generate_kie.py                       # Kie.ai nano-banana-2 API (sends JSON prompt)
+│   ├── generate_gemini.py                    # Google Gemini API (sends JSON prompt)
+│   └── export_prompt.py                      # Converts JSON prompt → plain text for Gemini web UI
+├── prompts/
+│   ├── image_restoration.json                # Structured restoration prompt (for API backends)
+│   └── image_restoration_plain_text.txt      # Plain text restoration prompt (for Gemini web UI)
+└── images/
+    └── *.jpg / *.png                         # Source photos to restore + restored output images
+```
+
+### Folder Details
+
+- **`scripts/`** — Python scripts that send prompts to API backends. Used in Step 5 (Execute) of the workflow. The scripts load the JSON prompt, upload the source image, call the API, and save the restored image to `images/`.
+- **`prompts/`** — Pre-built restoration prompts. `image_restoration.json` is used for API paths (the scripts consume it directly). `image_restoration_plain_text.txt` is the same prompt formatted for copy/paste into Gemini's web UI. Before running, the user's source image path must be added to `image_input` in the JSON.
+- **`images/`** — The user places their source photo here (e.g., `images/old_family_photo.jpg`), and restored output is saved here (e.g., `images/restored_output.png`). This folder serves as both input and output for the restoration workflow.
+
 ## When to Use This Skill
 
 - User wants to restore, enhance, or upscale an old/vintage/scanned photograph
@@ -102,16 +124,25 @@ Any API wrapper that accepts a text prompt + image input can use the restoration
 When a user asks to restore an image:
 
 1. **Identify the source image** — Ask the user for the path to the scanned photo (or confirm it's already in `images/`)
-2. **Choose prompt format**:
-   - API backend? Use `image_restoration.json` — update `image_input` with the source path
-   - Gemini web UI? Use `image_restoration_plain_text.txt` — output the text for the user to copy
+2. **Ask for output resolution** — If the user did not specify `1K`, `2K`, or `4K` in their request, you **MUST** pause and ask before proceeding. Resolution directly affects API billing costs, and even for the Gemini web UI path the AI model needs to know the expected output size. Do **NOT** assume a default silently.
+
+   | Resolution | Pixel Size (approx.) | Cost Impact |
+   |------------|---------------------|-------------|
+   | **1K** | ~1024px long edge | Lowest cost |
+   | **2K** | ~2048px long edge | Medium cost |
+   | **4K** | ~3840px long edge | Highest cost |
+
+   Update `api_parameters.resolution` in the JSON prompt and the `3840px` value in the prompt text to match. For plain-text prompts, adjust the upscale target accordingly (e.g., "Upscale to 2K (2048px on the long edge)").
 3. **Choose backend** — Present these options:
    - **Kie.ai API** — Highest quality, requires `KIE_API_KEY`
    - **Google Gemini API** — Direct API call, requires `GEMINI_API_KEY`
    - **Gemini web UI** — Free, manual copy/paste workflow
    - **Other API wrapper** — Extract prompt text and use with any compatible service
-4. **Execute** — Run the appropriate command or output the text prompt
-5. **Output** — Restored PNG at 4K resolution saved to `images/`
+4. **Choose prompt format**:
+   - API backend? Use `image_restoration.json` — update `image_input` with the source path
+   - Gemini web UI? Use `image_restoration_plain_text.txt` — output the text for the user to copy
+5. **Execute** — Run the appropriate command or output the text prompt
+6. **Output** — Restored image saved to `images/`
 
 ## Customizing the Restoration Prompt
 
