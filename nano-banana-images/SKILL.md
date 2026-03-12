@@ -201,7 +201,23 @@ When executing API calls to standard generation endpoints (which often only acce
 
 ## Execution: Backend Selection
 
-**BEFORE** constructing the prompt, you **MUST** ask the user which output path they want. Present these options:
+**BEFORE** constructing the prompt, you **MUST** ask the user two things:
+
+### 1. Output Resolution
+
+Ask the user what output resolution they want: **1K**, **2K**, or **4K**. This is required because resolution directly affects API billing/usage costs. Do **NOT** default silently — if the user did not specify a resolution in their original request, you **MUST** pause and ask before proceeding.
+
+| Resolution | Pixel Size (approx.) | Cost Impact |
+|------------|---------------------|-------------|
+| **1K** | ~1024px long edge | Lowest cost |
+| **2K** | ~2048px long edge | Medium cost |
+| **4K** | ~3840px long edge | Highest cost |
+
+Set the chosen value in `api_parameters.resolution` in the JSON prompt.
+
+### 2. Output Path
+
+Ask the user which output path they want. Present these options:
 
 1. **Kie.ai API** — Highest quality, requires `KIE_API_KEY` in `.env` -> creates structured JSON
 2. **Google Gemini API** — Direct Gemini call, requires `GEMINI_API_KEY` in `.env` -> creates structured JSON
@@ -251,12 +267,13 @@ This outputs the prompt as plain text. Copy and paste it into Gemini's "Create I
 When a user asks you to generate a highly detailed, realistic, or complex image:
 
 1. **Check for reference images.** If the user mentions a reference image by filename, look in `images/` first. Read the image to visually analyze it and incorporate its visual qualities into the prompt.
-2. **Ask the user which output path they want** (present the 5 options above).
-3. **Construct the prompt** in the appropriate format:
+2. **Ask for output resolution.** If the user did not specify 1K, 2K, or 4K in their request, you **MUST** pause and ask. Explain that resolution affects API billing costs. Do not assume a default.
+3. **Ask the user which output path they want** (present the 5 backend options).
+4. **Construct the prompt** in the appropriate format:
    - **API paths (options 1-4):** Build the structured JSON prompt, include any reference images in the `image_input` array, and save it to `prompts/`
    - **Gemini web UI (option 5):** Build a structured plain-text prompt with the same photography parameters and negative constraints. If there are reference images, tell the user to upload them alongside the text in Gemini.
-4. **Execute the selected backend command** (API paths) or output the plain text for the user to copy/paste (Gemini web UI).
-5. **Save generated images** to the `images/` folder.
+5. **Execute the selected backend command** (API paths) or output the plain text for the user to copy/paste (Gemini web UI).
+6. **Save generated images** to the `images/` folder.
 
 ## Image Restoration
 
@@ -268,6 +285,8 @@ This skill also supports restoring scanned vintage film photographs. Pre-built r
 | `prompts/image_restoration_plain_text.txt` | Plain text | Copy/paste into Gemini web UI |
 
 To restore an image via API, add the source image path to the `image_input` array in `image_restoration.json` and run the appropriate generation script. For Gemini web UI, upload the photo and paste the contents of `image_restoration_plain_text.txt`.
+
+**Resolution for restoration:** The default restoration prompt uses 4K. If the user did not specify a resolution, you **MUST** ask them what resolution they want (1K, 2K, or 4K) before running the restoration, since it affects API billing costs. Update `api_parameters.resolution` in the JSON prompt accordingly.
 
 ## Prompt JSON Schema Reference
 
