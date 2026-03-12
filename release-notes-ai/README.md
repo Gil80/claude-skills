@@ -16,10 +16,11 @@ Sections with no items are omitted automatically.
 
 ## Installation
 
-Copy this skill into your Claude skills directory:
+Copy the skill into your Claude skills directory and the agent file into your Claude agents directory:
 
 ```bash
 cp -r release-notes-ai ~/.claude/skills/
+cp agents/release-notes.md ~/.claude/agents/
 ```
 
 Install Python dependencies:
@@ -95,6 +96,9 @@ release-notes-ai/
 │   └── release_notes.py        # Main script
 └── examples/
     └── commits_example.json    # Demo data for file mode
+
+agents/
+└── release-notes.md            # Claude agent definition (interactive wrapper)
 ```
 
 ## License

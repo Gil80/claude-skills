@@ -15,13 +15,14 @@ Connects to Jira (or reads from a local JSON file), pulls completed sprint data,
 
 ## Installation
 
-Copy this skill into your Claude skills directory:
+Copy the skill into your Claude skills directory and the agent file into your Claude agents directory:
 
 ```bash
 cp -r sprint-retrospective-ai ~/.claude/skills/
+cp agents/sprint-retrospective.md ~/.claude/agents/
 ```
 
-Install Python dependencies (from the root `sprint-retro-ai` project):
+Install Python dependencies:
 
 ```bash
 pip install requests
@@ -82,6 +83,9 @@ sprint-retrospective-ai/
 │   └── retro_analyzer.py       # Main script
 └── examples/
     └── sprint_example.json     # Demo data for file mode
+
+agents/
+└── sprint-retrospective.md     # Claude agent definition (interactive wrapper)
 ```
 
 ## License
