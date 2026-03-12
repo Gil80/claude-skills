@@ -20,7 +20,7 @@ Copy the skill into your Claude skills directory and the agent file into your Cl
 
 ```bash
 cp -r release-notes-ai ~/.claude/skills/
-cp agents/release-notes.md ~/.claude/agents/
+cp release-notes-ai/agents/release-notes.md ~/.claude/agents/
 ```
 
 Install Python dependencies:
@@ -92,13 +92,12 @@ python ~/.claude/skills/release-notes-ai/scripts/release_notes.py \
 release-notes-ai/
 ├── SKILL.md                    # Claude skill definition
 ├── README.md                   # This file
+├── agents/
+│   └── release-notes.md        # Claude agent definition (interactive wrapper)
 ├── scripts/
 │   └── release_notes.py        # Main script
 └── examples/
     └── commits_example.json    # Demo data for file mode
-
-agents/
-└── release-notes.md            # Claude agent definition (interactive wrapper)
 ```
 
 ## License

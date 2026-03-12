@@ -19,7 +19,7 @@ Copy the skill into your Claude skills directory and the agent file into your Cl
 
 ```bash
 cp -r sprint-retrospective-ai ~/.claude/skills/
-cp agents/sprint-retrospective.md ~/.claude/agents/
+cp sprint-retrospective-ai/agents/sprint-retrospective.md ~/.claude/agents/
 ```
 
 Install Python dependencies:
@@ -79,13 +79,12 @@ python ~/.claude/skills/sprint-retrospective-ai/scripts/retro_analyzer.py \
 sprint-retrospective-ai/
 ├── SKILL.md                    # Claude skill definition
 ├── README.md                   # This file
+├── agents/
+│   └── sprint-retrospective.md # Claude agent definition (interactive wrapper)
 ├── scripts/
 │   └── retro_analyzer.py       # Main script
 └── examples/
     └── sprint_example.json     # Demo data for file mode
-
-agents/
-└── sprint-retrospective.md     # Claude agent definition (interactive wrapper)
 ```
 
 ## License
